@@ -142,11 +142,8 @@ func (s *Server) lanNodeJoin(me serf.MemberEvent) {
 			s.maybeBootstrap()
 		}
 
-		// Kick the WAN flooder.
-		select {
-		case s.floodCh <- struct{}{}:
-		default:
-		}
+		// Kick the join flooders.
+		s.FloodNotify()
 	}
 }
 
